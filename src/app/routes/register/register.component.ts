@@ -38,7 +38,6 @@ export class RegisterComponent implements OnInit {
 
     this.register.user(this.registerForm.value).subscribe(result => {
         this.user.user(result);
-        console.log(result)
       },
       err => {
         if (err.err.status === 401) {
