@@ -15,6 +15,7 @@ router.get("/",  (req, res) => {
 router.post("/tenant", tenants.createTenant);
 
 router.post("/login", tenants.login)
+router.post("/register", tenants.createTenant)
 router.get("/tenant/all", tenants.getAllTenants);
 router.get("/tenant/residence", tenants.getAllResident);
 router.get("/tenant/vacate", tenants.getNonResident);
