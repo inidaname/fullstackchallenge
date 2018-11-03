@@ -31,6 +31,9 @@ export class LoginComponent implements OnInit {
     },
     err => console.log(err));
   }
+
+  get f() { return this.loginForm.controls; }
+
 }
 
 export interface User {
