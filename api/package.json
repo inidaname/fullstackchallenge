@@ -19,6 +19,8 @@
     "mocha": "^5.2.0",
     "mongoose": "^5.3.8",
     "morgan": "^1.9.1",
-    "node-fetch": "^2.2.0"
+    "node-fetch": "^2.2.0",
+    "nodemailer": "^4.6.8",
+    "nodemailer-express-handlebars": "^3.0.0"
   }
 }

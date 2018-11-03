@@ -83,6 +83,5 @@ describe('LoginComponent', () => {
 
     // Now we can check to make sure the emitted value is correct
     expect(user.email).toBe('test@test.com');
-    expect(user.password).toBe('123456789');
   });
 });
