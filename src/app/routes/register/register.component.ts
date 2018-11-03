@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { justOneName } from 'src/app/helpers/name';
 import { RegisterService } from 'src/app/services/register.service';
 import { UserService } from 'src/app/services/user.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
+  errorMsg;
   constructor(
     private fb: FormBuilder,
     private register: RegisterService,
@@ -24,7 +26,7 @@ export class RegisterComponent implements OnInit {
       phoneNumber: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
-    })
+    });
   }
 
   get f() { return this.registerForm.controls; }
@@ -36,8 +38,13 @@ export class RegisterComponent implements OnInit {
 
     this.register.user(this.registerForm.value).subscribe(result => {
         this.user.user(result);
+        console.log(result)
       },
-      err => console.log(err)
+      err => {
+        if (err.err.status === 401) {
+          this.errorMsg = 'Phone or Email already exist';
+        }
+      }
     );
 
 

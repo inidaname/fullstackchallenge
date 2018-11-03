@@ -18,6 +18,9 @@
         <label for="exampleInputPassword1">Password</label>
         <input type="password" formControlName="password" [ngClass]="{'is-invalid': f.password.touched && f.password.invalid}" class="form-control" id="exampleInputPassword1" placeholder="Password">
       </div>
+      <div *ngIf="errorMsg" class="alert alert-warning" role="alert">
+       {{errorMsg}}
+      </div>
       <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Submit</button>
     </form>
   </div>

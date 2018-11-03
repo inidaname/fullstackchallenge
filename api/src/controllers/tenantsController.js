@@ -50,7 +50,7 @@ exports.createTenant = (req, res) => {
         .then(user => {
           if (user) {
             return res.status(401).json({
-              message: "Tenant Already exit"
+              message: "Tenant Already exit with the email or phone provided"
             });
           } else {
             const tenant = new Tenants({

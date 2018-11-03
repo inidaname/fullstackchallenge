@@ -33,7 +33,7 @@ export class RegisterService {
     }
 
     console.log(errorMessage);
-    return throwError(errorMessage);
+    return throwError({errorMessage, err});
 }
 
 }
