@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
+import { LoginComponent, User } from './login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 describe('LoginComponent', () => {
@@ -74,12 +74,12 @@ describe('LoginComponent', () => {
     component.loginForm.controls['password'].setValue('123456789');
     expect(component.loginForm.valid).toBeTruthy();
 
-    // let user: User;
-    // // Subscribe to the Observable and store the user in a local variable.
-    // component.loggedIn.subscribe((value) => user = value);
+    let user: User;
+    // Subscribe to the Observable and store the user in a local variable.
+    component.loggedIn.subscribe((value) => user = value);
 
-    // // Trigger the login function
-    // component.login();
+    // Trigger the login function
+    component.loginUser();
 
     // Now we can check to make sure the emitted value is correct
     expect(user.email).toBe('test@test.com');
