@@ -34,12 +34,12 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.register.user
-      .subscribe(result => {
-        this.user.user(result)
+    this.register.user(this.registerForm.value).subscribe(result => {
+        this.user.user(result);
       },
-      err => console.log(err));
-    
+      err => console.log(err)
+    );
+
 
   }
 
