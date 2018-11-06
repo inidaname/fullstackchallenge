@@ -50,10 +50,39 @@ exports.getInterestByProperty = (req, res) => {
     });
 };
 
+exports.getInterest = (req, res) => {
+
+  Interest
+    .find({})
+    .where("property", req.params.property)
+    .where("tenant", req.params.tenant)
+    .populate("tenant", "-password")
+    .populate("property")
+    .exec()
+    .then(results => {
+      if (results) {
+        res.status(200).json({
+          property: results
+        });
+      } else {
+        res.status(404).send({
+          message: "This property has no indicated interests"
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: {
+          message: err
+        }
+      });
+    });
+};
+
 exports.getInterestByTenant = (req, res) => {
   Interest
     .find({})
-    .where("tenant", req.params.propertyId)
+    .where("tenant", req.params.tenantId)
     .populate("properties")
     .exec()
     .then(results => {
@@ -92,11 +121,11 @@ exports.deleteInterest = (req, res) => {
       }
     })
     .catch(err => {
-        res.status(500).json({
-            error: {
-                message: err
-            }
-        });
+      res.status(500).json({
+        error: {
+          message: err
+        }
+      });
     });
 
 }

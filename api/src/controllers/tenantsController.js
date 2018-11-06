@@ -65,15 +65,23 @@ exports.createTenant = (req, res) => {
               .then(result => {
                 const {
                   fullName,
-                  phoneNumber,
                   email
                 } = result;
                 sendEmail(fullName, email);
               })
               .then(result => {
-                res.status(201).json({
-                  body: result,
+                const token = jwt.sign({
+                    phone: result.phoneNumber,
+                    userId: result._id
+                  },
+                  process.env.JWT_KEY, {
+                    expiresIn: "1W"
+                  }
+                );
+                return res.status(200).json({
                   message: "Member Registered successfully",
+                  token: token,
+                  body: result
                 });
               })
               .catch(err => {
@@ -123,7 +131,7 @@ exports.login = (req, res) => {
           return res.status(200).json({
             message: "Auth successful",
             token: token,
-            user: user
+            body: user
           });
         }
 
