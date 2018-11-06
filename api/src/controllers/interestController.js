@@ -8,7 +8,6 @@ exports.createInterest = (req, res) => {
 
   interest
     .save()
-    .exec()
     .then(interest => {
       res.status(201).json({
         body: interest,
@@ -29,7 +28,6 @@ exports.getInterestByProperty = (req, res) => {
     .find({})
     .where("property", req.params.propertyId)
     .populate("tenant", "-password")
-    .exec()
     .then(results => {
       if (results) {
         res.status(200).json({
@@ -58,7 +56,6 @@ exports.getInterest = (req, res) => {
     .where("tenant", req.params.tenant)
     .populate("tenant", "-password")
     .populate("property")
-    .exec()
     .then(results => {
       if (results) {
         res.status(200).json({
@@ -84,7 +81,6 @@ exports.getInterestByTenant = (req, res) => {
     .find({})
     .where("tenant", req.params.tenantId)
     .populate("properties")
-    .exec()
     .then(results => {
       if (results) {
         res.status(200).json({
@@ -108,7 +104,6 @@ exports.getInterestByTenant = (req, res) => {
 exports.deleteInterest = (req, res) => {
   Interest
     .findByIdAndDelete(req.params.id)
-    .exec()
     .then(result => {
       if (result) {
         res.status(200).json({
