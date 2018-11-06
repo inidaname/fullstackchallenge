@@ -5,7 +5,7 @@ const tenants = require("../controllers/tenantsController");
 const properties = require("../controllers/propertiesController");
 const interest = require("../controllers/interestController");
 
-router.get("/",  (req, res) => {
+router.get("/", (req, res) => {
   res.status(200).json({
     message: "Welcome to my Property list"
   });
@@ -15,6 +15,7 @@ router.get("/",  (req, res) => {
 router.post("/tenant", tenants.createTenant);
 
 router.post("/login", tenants.login)
+router.post("/register", tenants.createTenant)
 router.get("/tenant/all", tenants.getAllTenants);
 router.get("/tenant/residence", tenants.getAllResident);
 router.get("/tenant/vacate", tenants.getNonResident);
@@ -33,6 +34,7 @@ router.delete("/property/:id", properties.deleteProperty);
 
 // Interest controllers
 router.post("/interest", interest.createInterest);
+router.get("/interest/:property/:tenant", interest.getInterest);
 router.get("/interest/property/:id", interest.getInterestByProperty);
 router.get("/interest/tenant/:id", interest.getInterestByProperty);
 router.delete("/interest/:id", interest.deleteInterest);

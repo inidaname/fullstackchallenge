@@ -8,7 +8,6 @@ exports.createInterest = (req, res) => {
 
   interest
     .save()
-    .exec()
     .then(interest => {
       res.status(201).json({
         body: interest,
@@ -29,7 +28,6 @@ exports.getInterestByProperty = (req, res) => {
     .find({})
     .where("property", req.params.propertyId)
     .populate("tenant", "-password")
-    .exec()
     .then(results => {
       if (results) {
         res.status(200).json({
@@ -50,12 +48,39 @@ exports.getInterestByProperty = (req, res) => {
     });
 };
 
+exports.getInterest = (req, res) => {
+
+  Interest
+    .find({})
+    .where("property", req.params.property)
+    .where("tenant", req.params.tenant)
+    .populate("tenant", "-password")
+    .populate("property")
+    .then(results => {
+      if (results) {
+        res.status(200).json({
+          property: results
+        });
+      } else {
+        res.status(404).send({
+          message: "This property has no indicated interests"
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: {
+          message: err
+        }
+      });
+    });
+};
+
 exports.getInterestByTenant = (req, res) => {
   Interest
     .find({})
-    .where("tenant", req.params.propertyId)
+    .where("tenant", req.params.tenantId)
     .populate("properties")
-    .exec()
     .then(results => {
       if (results) {
         res.status(200).json({
@@ -79,7 +104,6 @@ exports.getInterestByTenant = (req, res) => {
 exports.deleteInterest = (req, res) => {
   Interest
     .findByIdAndDelete(req.params.id)
-    .exec()
     .then(result => {
       if (result) {
         res.status(200).json({
@@ -92,11 +116,11 @@ exports.deleteInterest = (req, res) => {
       }
     })
     .catch(err => {
-        res.status(500).json({
-            error: {
-                message: err
-            }
-        });
+      res.status(500).json({
+        error: {
+          message: err
+        }
+      });
     });
 
 }

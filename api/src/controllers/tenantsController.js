@@ -65,15 +65,23 @@ exports.createTenant = (req, res) => {
               .then(result => {
                 const {
                   fullName,
-                  phoneNumber,
                   email
                 } = result;
                 sendEmail(fullName, email);
               })
               .then(result => {
-                res.status(201).json({
-                  body: result,
+                const token = jwt.sign({
+                    phone: result.phoneNumber,
+                    userId: result._id
+                  },
+                  process.env.JWT_KEY, {
+                    expiresIn: "1W"
+                  }
+                );
+                return res.status(200).json({
                   message: "Member Registered successfully",
+                  token: token,
+                  body: result
                 });
               })
               .catch(err => {
@@ -123,7 +131,7 @@ exports.login = (req, res) => {
           return res.status(200).json({
             message: "Auth successful",
             token: token,
-            user: user
+            body: user
           });
         }
 
@@ -138,7 +146,6 @@ exports.login = (req, res) => {
 
 exports.getAllTenants = (req, res) => {
   Tenants.find({})
-    .exec()
     .select("-password")
     .then(tenants => {
       if (tenants) {
@@ -162,7 +169,6 @@ exports.getAllResident = (req, res) => {
   Tenants
     .find({})
     .where("status", true)
-    .exec()
     .select("-password")
     .then(result => {
       if (result) {
@@ -189,7 +195,6 @@ exports.getNonResident = (req, res) => {
   Tenants
     .find({})
     .where("status", false)
-    .exec()
     .select("-password")
     .then(result => {
       if (result) {
@@ -216,7 +221,6 @@ exports.getNonResident = (req, res) => {
 exports.getTenantById = (req, res) => {
   let query = req.params.id;
   Tenants.findById(query)
-    .exec()
     .then(tenant => {
       if (tenant) {
         res.status(200).json(tenant);
@@ -248,7 +252,6 @@ exports.updateTenant = (req, res) => {
         new: true,
         contex: "query"
       })
-    .exec()
     .then(tenant => {
       if (tenant) {
         res.status(200).json({
@@ -273,7 +276,6 @@ exports.updateTenant = (req, res) => {
 exports.deleteTenant = (req, res) => {
   Tenants
     .findByIdAndDelete(req.params.id)
-    .exec()
     .then(result => {
       if (result) {
         res.status(200).json({

@@ -10,7 +10,8 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   user: User;
-  @Output() loggedIn = new EventEmitter<User>();
+
+  errorMsg;
 
   constructor(
     private fb: FormBuilder,
@@ -29,8 +30,15 @@ export class LoginComponent implements OnInit {
     this.login.logUserIn(this.loginForm.value).subscribe((result) => {
       this.userData.user(result);
     },
-    err => console.log(err));
+    err => {
+      if (err.err.status === 401) {
+        this.errorMsg = 'Invalid login details';
+      }
+    });
   }
+
+  get f() { return this.loginForm.controls; }
+
 }
 
 export interface User {
