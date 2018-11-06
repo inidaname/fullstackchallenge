@@ -43,7 +43,6 @@ exports.createProperty = (req, res) => {
 
 exports.getAllProperties = (req, res) => {
   Properties.find({})
-    .exec()
     .then(properties => {
       if (properties) {
         res.status(200).json(properties);
@@ -66,7 +65,6 @@ exports.getAllOccupied = (req, res) => {
   Properties
     .find({})
     .where("status", true)
-    .exec()
     .then(result => {
       if (result) {
         res.status(200).json({
@@ -92,7 +90,6 @@ exports.getAllVacants = (req, res) => {
   Properties
     .find({})
     .where("status", false)
-    .exec()
     .then(result => {
       if (result) {
         res.status(200).json({
@@ -118,7 +115,6 @@ exports.getAllVacants = (req, res) => {
 exports.getPropertyById = (req, res) => {
   let query = req.params.id;
   Properties.findById(query)
-    .exec()
     .then(property => {
       if (property) {
         res.status(200).json(property);
@@ -150,7 +146,6 @@ exports.updateProperty = (req, res) => {
         new: true,
         contex: "query"
       })
-    .exec()
     .then(property => {
       if (property) {
         res.status(200).json({
@@ -175,7 +170,6 @@ exports.updateProperty = (req, res) => {
 exports.deleteProperty = (req, res) => {
   Properties
     .findByIdAndDelete(req.params.id)
-    .exec()
     .then(result => {
       if (result) {
         res.status(200).json({
