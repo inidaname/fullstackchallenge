@@ -7,8 +7,8 @@ const expressValidator = require("express-validator");
 
 
 //impoer module
-const routes = require("./src/routes/index");
-const errorHandlers = require("./src/lib/handleErrors");
+const routes = require("./api/src/routes/index");
+const errorHandlers = require("./api/src/lib/handleErrors");
 
 
 
