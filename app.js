@@ -33,6 +33,10 @@ app.use(logger("dev"));
 app.use(helmet());
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
+
+// Create link to Angular build directory
+const distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Exposes a bunch of methods for validating data. Used heavily on userController.validateRegister
