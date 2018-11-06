@@ -13,7 +13,7 @@ const errorHandlers = require("./api/src/lib/handleErrors");
 
 
 // import environmental variables from our variables.env file
-require("dotenv").config({ path: "keys.env" });
+require("dotenv").config({ path: "./api/keys.env" });
 
 
 // Connect to our Database and handle an bad connections
