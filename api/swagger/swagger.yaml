@@ -21,7 +21,7 @@ tags:
 - name: "interest"
   description: "Interest indicated by tenants"
 
-basePath: "/"
+basePath: "/api/"
 schemes:
   - "https"
 paths:
